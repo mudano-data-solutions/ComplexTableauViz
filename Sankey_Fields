@@ -1,0 +1,41 @@
+Sankey Values:
+
+Sankey Measure:
+[Profit]
+
+Flow Size Indicator:
+SUM([Profit])
+
+Flow Size:
+[Flow Size Indicator]/TOTAL([Flow Size Indicator])
+
+Sigmoid: 
+1/(1+EXP(1)^-[T1])
+
+Sankey Nodes:
+
+Node 1 Bar Position
+RUNNING_SUM(1/(SIZE()+1))+RUNNING_SUM([Flow Size]) - [Flow Size]
+
+Node 1 Index
+Index()
+
+Node 1 Position
+[Node 1 Index] / (SIZE()+1)
+
+Node 1 Position Max
+[Node 1 Position] + RUNNING_SUM([Flow Size])
+
+Node 1 Position Min
+[Node 1 Position Max] - [Flow Size]
+
+Sankey Curve:
+
+Curve A Max
+[Node 1 Position Max] + ([Node 2 Position Max] - [Node 1 Position Max]) * ATTR([Sigmoid])
+
+Curve A Min
+[Node 1 Position Min] + ([Node 2 Position Min] - [Node 1 Position Min]) * ATTR([Sigmoid])
+
+Curve A Polygon
+CASE attr([Min or Max]) WHEN 'Min' THEN [Curve A Min] WHEN 'Max' THEN [Curve A Max] END

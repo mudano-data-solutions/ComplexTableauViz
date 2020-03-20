@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Setup files
+helpers.py 
+
+# Data 
+
+# Tableau
+*.twb
+*.twbr
